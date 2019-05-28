@@ -1,174 +1,236 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Licensed to the Apache Software Foundation (ASF) under one or more
-  contributor license agreements.  See the NOTICE file distributed with
-  this work for additional information regarding copyright ownership.
-  The ASF licenses this file to You under the Apache License, Version 2.0
-  (the "License"); you may not use this file except in compliance with
-  the License.  You may obtain a copy of the License at
-
-  http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
--->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.redhat.coolstore</groupId>
     <artifactId>inventory</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <packaging>war</packaging>
-
-    <name>Inventory Microservice</name>
-    <description>WildFly Swarm : REST - JDBC - Inventory Service</description>
+    <version>1.0-SNAPSHOT</version>
 
     <properties>
+        <quarkus.version>0.15.0</quarkus.version>
+        <surefire-plugin.version>2.22.1</surefire-plugin.version>
+        <compiler-plugin.version>3.8.0</compiler-plugin.version>
+        <docker-plugin.version>0.28.0</docker-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-        <java.version>1.8</java.version>
-        <maven.min.version>3.3.9</maven.min.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-        <maven-war-plugin.version>3.1.0</maven-war-plugin.version>
-        <failOnMissingWebXml>false</failOnMissingWebXml>
-        <jdk.min.version>${maven.compiler.source}</jdk.min.version>
-
-        <fabric8.version>2.2.205</fabric8.version>
-        <fabric8.maven.plugin.version>3.5.41</fabric8.maven.plugin.version>
-        <fabric8.generator.from>registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5
-        </fabric8.generator.from>
-
-        <version.wildfly.swarm>7.0.0.redhat-8</version.wildfly.swarm>
-        <version.resteasy>3.0.19.Final</version.resteasy>
-        <version.override.jackson>2.7.7</version.override.jackson>
-
-        <version.h2>1.4.187</version.h2>
-        <version.resteasy>3.0.19.Final</version.resteasy>
-        <version.postgresql>9.4.1207</version.postgresql>
-
-        <maven.test.skip>true</maven.test.skip>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.wildfly.swarm</groupId>
-                <artifactId>bom</artifactId>
-                <version>${version.wildfly.swarm}</version>
-                <type>pom</type>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-bom</artifactId>
                 <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.wildfly.swarm</groupId>
-                <artifactId>bom-certified</artifactId>
-                <version>${version.wildfly.swarm}</version>
                 <type>pom</type>
-                <scope>import</scope>
+                <version>${quarkus.version}</version>
             </dependency>
-            <dependency>
-                <groupId>io.fabric8</groupId>
-                <artifactId>fabric8-project-bom-with-platform-deps</artifactId>
-                <version>${fabric8.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-hibernate-orm-panache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy-jsonb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-jdbc-postgresql</artifactId>
+        </dependency>
 
-<!-- Add monitor fraction -->
-
+        <!-- Testing: -->
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>jaxrs</artifactId>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-junit5</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>cdi</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>ejb</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>datasources</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>${version.h2}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${version.postgresql}</version>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
-                <groupId>org.wildfly.swarm</groupId>
-                <artifactId>wildfly-swarm-plugin</artifactId>
-                <version>${version.wildfly.swarm}</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler-plugin.version}</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <!-- the parameters=true option is critical so that RESTEasy works fine -->
+                    <parameters>true</parameters>
+                </configuration>
+            </plugin>
+            <plugin>
+                <!-- you need this specific version to integrate with the other build helpers -->
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <!-- This is what injects the magic Quarkus bytecode -->
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-maven-plugin</artifactId>
+                <version>${quarkus.version}</version>
                 <executions>
                     <execution>
-                        <id>package</id>
                         <goals>
-                            <goal>package</goal>
+                            <goal>build</goal>
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <!-- Automatically start PostgreSQL for integration testing - requires Docker -->
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>${docker-plugin.version}</version>
                 <configuration>
-                    <jvmArguments>-Djava.net.preferIPv4Stack=true</jvmArguments>
-                    <arguments>
-                        <argument>-S</argument>
-                        <argument>development</argument>
-                    </arguments>
+                    <images>
+                        <image>
+                            <name>postgres:10.5</name>
+                            <alias>postgresql</alias>
+                            <run>
+                                <env>
+                                    <POSTGRES_USER>quarkus_test</POSTGRES_USER>
+                                    <POSTGRES_PASSWORD>quarkus_test</POSTGRES_PASSWORD>
+                                    <POSTGRES_DB>quarkus_test</POSTGRES_DB>
+                                </env>
+                                <ports>
+                                    <port>5432:5432</port>
+                                </ports>
+                                <log>
+                                    <prefix>PostgreSQL: </prefix>
+                                    <date>default</date>
+                                    <color>cyan</color>
+                                </log>
+                                <wait>
+                                    <tcp>
+                                        <mode>mapped</mode>
+                                        <ports>
+                                            <port>5432</port>
+                                        </ports>
+                                    </tcp>
+                                    <time>10000</time>
+                                </wait>
+                            </run>
+                        </image>
+                    </images>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>docker-start</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>stop</goal>
+                            <goal>start</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>docker-stop</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
 
     <profiles>
         <profile>
-            <id>openshift</id>
+            <!-- Optionally activate this profile to compile the demo into native! -->
+            <id>native</id>
+            <activation>
+                <property>
+                    <name>native</name>
+                </property>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>io.fabric8</groupId>
-                        <artifactId>fabric8-maven-plugin</artifactId>
-                        <version>${fabric8.maven.plugin.version}</version>
+                        <groupId>io.quarkus</groupId>
+                        <artifactId>quarkus-maven-plugin</artifactId>
+                        <version>${quarkus.version}</version>
                         <executions>
                             <execution>
                                 <goals>
-                                    <goal>resource</goal>
-                                    <goal>build</goal>
+                                    <goal>native-image</goal>
                                 </goals>
                             </execution>
                         </executions>
-                        <configuration>
-                            <generator>
-                                <includes>
-                                    <include>wildfly-swarm</include>
-                                </includes>
-                            </generator>
-                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>${surefire-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                                <configuration>
+                                    <systemProperties>
+                                        <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
+                                    </systemProperties>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>eclipse</id>
+            <activation>
+                <property>
+                    <!-- This is a trick to have the profile automatically activated by Eclipse -->
+                    <name>m2e.version</name>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                        <plugin>
+                            <groupId>org.eclipse.m2e</groupId>
+                            <artifactId>lifecycle-mapping</artifactId>
+                            <version>1.0.0</version>
+                            <configuration>
+                                <lifecycleMappingMetadata>
+                                    <pluginExecutions>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>io.fabric8</groupId>
+                                                <artifactId>
+                                                    docker-maven-plugin
+                                                </artifactId>
+                                                <versionRange>
+                                                    [0.28.0,)
+                                                </versionRange>
+                                                <goals>
+                                                    <goal>start</goal>
+                                                    <goal>stop</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <ignore></ignore>
+                                            </action>
+                                        </pluginExecution>
+                                    </pluginExecutions>
+                                </lifecycleMappingMetadata>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
             </build>
         </profile>
     </profiles>
