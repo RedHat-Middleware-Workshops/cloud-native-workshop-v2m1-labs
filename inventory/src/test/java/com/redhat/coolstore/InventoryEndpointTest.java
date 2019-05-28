@@ -12,29 +12,9 @@ public class InventoryEndpointTest {
     @Test
     public void testListAllInventory() {
         //List all, should have all 8 cities inventory the database has initially:
-        given()
-              .when().get("/inventory")
-              .then()
-              .statusCode(200)
-              .body(
-                    containsString("Raleigh"),
-                    containsString("Boston"),
-                    containsString("Seoul"),
-                    containsString("Singapore"),
-                    containsString("London"),
-                    containsString("NewYork"),
-                    containsString("Paris"),
-                    containsString("Tokyo")
-                    );
-
+       
         //List a certain city(Seoul), 256 should be returned:
-        given()
-              .when().get("/inventory/Seoul")
-              .then()
-              .statusCode(200)
-              .body(                   
-                    containsString("256")
-              );
+       
     }
 
 }
