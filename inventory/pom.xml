@@ -43,6 +43,14 @@
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-hibernate-orm-panache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-jdbc-h2</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -76,8 +84,9 @@
                     </execution>
                 </executions>
             </plugin>
+            <!--
             <plugin>
-                <!-- Automatically start PostgreSQL for integration testing - requires Docker -->
+                 Automatically start PostgreSQL for integration testing - requires Docker 
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>${docker-plugin.version}</version>
@@ -131,6 +140,7 @@
                     </execution>
                 </executions>
             </plugin>
+            -->
         </plugins>
     </build>
 
