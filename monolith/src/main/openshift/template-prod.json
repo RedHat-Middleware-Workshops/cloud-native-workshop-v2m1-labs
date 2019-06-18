@@ -565,7 +565,7 @@
                 "strategy": {
                     "type": "JenkinsPipeline",
                     "jenkinsPipelineStrategy": {
-                        "jenkinsfile": "node ('maven') {\n  stage 'Build'\n  sleep 5\n\n  stage 'Run Tests in DEV'\n  sleep 10\n\n  stage 'Deploy to PROD'\n  openshiftTag(sourceStream: 'coolstore', sourceTag: 'latest', namespace: 'coolstore-dev', destinationStream: 'coolstore', destinationTag: 'prod', destinationNamespace: 'coolstore-prod')\n  sleep 10\n\n  stage 'Run Tests in PROD'\n  sleep 30\n}"
+                        "jenkinsfile": "node ('maven') {\n  stage 'Build'\n  sleep 5\n\n  stage 'Run Tests in DEV'\n  sleep 10\n\n  stage 'Deploy to PROD'\n  openshiftTag(sourceStream: 'coolstore', sourceTag: 'latest', namespace: 'userXX-coolstore-dev', destinationStream: 'coolstore', destinationTag: 'prod', destinationNamespace: 'userXX-coolstore-prod')\n  sleep 10\n\n  stage 'Run Tests in PROD'\n  sleep 30\n}"
                     }
                 },
                 "output": {},
