@@ -499,12 +499,12 @@
                 "name": "ci_admin"
             },
             "groupNames": [
-                "system:serviceaccounts:coolstore-prod"
+                "system:serviceaccounts:userXX-coolstore-prod"
             ],
             "subjects": [
                 {
                     "kind": "SystemGroup",
-                    "name": "system:serviceaccounts:coolstore-prod"
+                    "name": "system:serviceaccounts:userXX-coolstore-prod"
                 }
             ],
             "roleRef": {
