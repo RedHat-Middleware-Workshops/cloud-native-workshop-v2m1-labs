@@ -5,4 +5,4 @@ The included Java projects and/or installation files are here:
 
 * Catalog - Spring Boot project
 * Inventory - Quarkus project
-* monolith - JBoss EAP project
+* Monolith - JBoss EAP project
