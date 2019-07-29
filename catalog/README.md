@@ -19,7 +19,7 @@ oc new-project demo
 oc new-app -e POSTGRESQL_USER=catalog \
              -e POSTGRESQL_PASSWORD=mysecretpassword \
              -e POSTGRESQL_DATABASE=catalog \
-             openshift/postgresql:latest \
+             openshift/postgresql:9.4 \
              --name=catalog-database
 ```
 > **NOTE:** If you change the username and password you also need to update `src/main/fabric8/credential-secret.yml`.
