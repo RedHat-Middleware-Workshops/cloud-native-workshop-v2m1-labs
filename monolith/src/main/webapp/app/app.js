@@ -8,6 +8,13 @@ var module = angular.module('app', ['ngRoute', 'patternfly']), auth = {
 };
 
 
+var express = require('express'),
+    app = express(),
+    cors = require('cors');
+
+// Enable CORS support
+app.use(cors());
+
 module.factory('Auth', function () {
     return auth;
 });
