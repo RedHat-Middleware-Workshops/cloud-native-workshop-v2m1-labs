@@ -8,8 +8,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <quarkus.version>1.0.0.CR1</quarkus.version>
-        <compiler-plugin.version>3.8.1</compiler-plugin.version>
+        <quarkus.version>1.0.1.Final</quarkus.version>
         <surefire-plugin.version>2.22.1</surefire-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -49,17 +48,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${compiler-plugin.version}</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <!-- the parameters=true option is critical so that RESTEasy works fine -->
-                    <parameters>true</parameters>
-                </configuration>
-            </plugin>
-            <plugin>
                 <!-- you need this specific version to integrate with the other build helpers -->
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
@@ -81,63 +69,6 @@
                     <ignoredEntries>META-INF/BC2048KE.SF,META-INF/BC1024KE.SF,META-INF/BC2048KE.DSA,META-INF/BC1024KE.DSA</ignoredEntries>
                 </configuration>
             </plugin>
-            <!--
-            <plugin>
-                 Automatically start PostgreSQL for integration testing - requires Docker 
-                <groupId>io.fabric8</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>${docker-plugin.version}</version>
-                <configuration>
-                    <images>
-                        <image>
-                            <name>postgres:10.5</name>
-                            <alias>postgresql</alias>
-                            <run>
-                                <env>
-                                    <POSTGRES_USER>quarkus_test</POSTGRES_USER>
-                                    <POSTGRES_PASSWORD>quarkus_test</POSTGRES_PASSWORD>
-                                    <POSTGRES_DB>quarkus_test</POSTGRES_DB>
-                                </env>
-                                <ports>
-                                    <port>5432:5432</port>
-                                </ports>
-                                <log>
-                                    <prefix>PostgreSQL: </prefix>
-                                    <date>default</date>
-                                    <color>cyan</color>
-                                </log>
-                                <wait>
-                                    <tcp>
-                                        <mode>mapped</mode>
-                                        <ports>
-                                            <port>5432</port>
-                                        </ports>
-                                    </tcp>
-                                    <time>10000</time>
-                                </wait>
-                            </run>
-                        </image>
-                    </images>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>docker-start</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>stop</goal>
-                            <goal>start</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>docker-stop</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>stop</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
         </plugins>
     </build>
 
