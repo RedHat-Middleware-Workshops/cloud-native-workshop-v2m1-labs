@@ -3,8 +3,6 @@
 This repository has the complete coolstore monolith built as a Java EE 7 application. To deploy it on OpenShift Container Platform (OCP) follow the instructions below
 
 
-
-
 ## Pre requisite
 
 * Access to a OCP cluster using 3.5 or later.
