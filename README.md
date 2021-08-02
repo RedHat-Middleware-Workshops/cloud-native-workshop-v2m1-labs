@@ -1,6 +1,8 @@
 The CCN Roadshow(Dev Track) Module 1 Labs 2021
 ===
-These labs provide templates, generated Java codes, empty configuration for each lab that the workshop attenddees will develop during the roadshow.
+
+This repo provides templates, generated Java codes, empty configuration for each labs that developers need to implement cloud-native microservices in workshop. 
+
 The included Java projects and/or installation files are here:
 
 * Catalog - Spring Boot project
