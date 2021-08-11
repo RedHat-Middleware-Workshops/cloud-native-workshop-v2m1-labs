@@ -1,8 +1,5 @@
 package com.redhat.coolstore;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.containsString;
-
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 

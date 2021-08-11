@@ -58,13 +58,13 @@ public class Transformers {
         int randomNameAndEmailIndex = ThreadLocalRandom.current().nextInt(RANDOM_NAMES.length);
 
         JsonObject jsonObject = Json.createObjectBuilder()
-            .add("orderValue", new Double(cart.getCartTotal()))
+            .add("orderValue", Double.valueOf(cart.getCartTotal()))
             .add("customerName",RANDOM_NAMES[randomNameAndEmailIndex])
             .add("customerEmail",RANDOM_EMAILS[randomNameAndEmailIndex])
             .add("retailPrice", cart.getShoppingCartItemList().stream().mapToDouble(i -> i.getQuantity()*i.getPrice()).sum())
-            .add("discount", new Double(cart.getCartItemPromoSavings()))
-            .add("shippingFee", new Double(cart.getShippingTotal()))
-            .add("shippingDiscount", new Double(cart.getShippingPromoSavings()))
+            .add("discount", Double.valueOf(cart.getCartItemPromoSavings()))
+            .add("shippingFee", Double.valueOf(cart.getShippingTotal()))
+            .add("shippingDiscount", Double.valueOf(cart.getShippingPromoSavings()))
             .add("items",cartItems) 
             .build();
         StringWriter w = new StringWriter();
