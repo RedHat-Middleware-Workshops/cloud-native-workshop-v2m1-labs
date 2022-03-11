@@ -7,6 +7,6 @@ The included Java projects and/or installation files are here:
 
 * Catalog - Spring Boot project
 * Inventory - Quarkus project
-* Monolith - JBoss EAP project
+* Monolith - JBoss EAP project 
 
 OpenShift version - 4.10
