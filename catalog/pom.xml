@@ -27,34 +27,41 @@
     <description>Rest JDBC SpringBoot Coolstore Catalog App</description>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.release>17</maven.compiler.release>
         <spring-cloud.bom.version>2020.0.4</spring-cloud.bom.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-        <spring-boot-maven-plugin.version>2.4.9</spring-boot-maven-plugin.version>
+        <spring-boot.version>2.7.10</spring-boot.version>
+        <dekorate.version>2.11.5.redhat-00008</dekorate.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>dev.snowdrop</groupId>
-                <artifactId>snowdrop-dependencies</artifactId>
-                <version>2.4.9.Final-redhat-00001</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.bom.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+        <dependency>
+            <groupId>io.dekorate</groupId>
+            <artifactId>dekorate-spring-bom</artifactId>
+            <version>${dekorate.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <version>${spring-boot.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
         </dependencies>
     </dependencyManagement>
+
     <dependencies>
+        <!-- The OpenShift Spring Starter automatically adds "io.dekorate:openshift-annotations" as a transitive dependency -->
+        <dependency>
+            <groupId>io.dekorate</groupId>
+            <artifactId>openshift-spring-starter</artifactId>
+            <version>${dekorate.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
