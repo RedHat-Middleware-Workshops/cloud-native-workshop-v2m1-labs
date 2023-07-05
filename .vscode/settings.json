@@ -1,3 +1,4 @@
 {
-    "java.server.launchMode": "Standard"
+    "java.server.launchMode": "Standard",
+    "cli.executable.path": "/home/user/.windup/tooling/vscode/windup-cli-6.2.5.Final/bin/windup-cli"
 }
