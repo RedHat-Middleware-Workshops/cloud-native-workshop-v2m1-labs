@@ -50,7 +50,7 @@ commands:
     exec:
       label: 02. Start Live Coding
       component: quarkus-tools
-      commandLine: mvn clean quarkus:dev -Dquarkus.http.host=0.0.0.0
+      commandLine: mvn clean quarkus:dev -Dquarkus.http.host=0.0.0.0 -f $PROJECT_SOURCE/inventory
   - id: 03-package-app
     exec:
       label: 03. Package App for OpenShift
