@@ -26,12 +26,25 @@ components:
           name: test-endpoint
           protocol: tcp
           targetPort: 8081
+        - exposure: none
+          name: kubedock
+          protocol: tcp
+          targetPort: 2475
       env:
         - value: /home/jboss/.m2
           name: MAVEN_CONFIG
         - value: -Xmx4G -Xss128M -XX:MetaspaceSize=1G -XX:MaxMetaspaceSize=2G
           name: MAVEN_OPTS
-      image: quay.io/openshiftlabs/cloudnative-workspaces-quarkus:3.8-rhbq3
+        - name: KUBEDOCK_ENABLED
+          value: 'true'
+        - name: DOCKER_HOST
+          value: 'tcp://127.0.0.1:2475'
+        - name: TESTCONTAINERS_RYUK_DISABLED
+          value: 'true'
+        - name: TESTCONTAINERS_CHECKS_DISABLE
+          value: 'true'
+      image: quay.io/openshiftlabs/cloudnative-workspaces-quarkus:3.9
+      # image: quay.io/devfile/universal-developer-image:latest
       memoryLimit: 6Gi
       memoryRequest: 4Gi
       volumeMounts:
