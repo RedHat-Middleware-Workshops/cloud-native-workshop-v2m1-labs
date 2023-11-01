@@ -35,6 +35,7 @@ components:
           name: MAVEN_CONFIG
         - value: -Xmx4G -Xss128M -XX:MetaspaceSize=1G -XX:MaxMetaspaceSize=2G
           name: MAVEN_OPTS
+        - name: KUBEDOCK_ENABLED
           value: 'true'
         - name: DOCKER_HOST
           value: 'tcp://0.0.0.0:2475'
